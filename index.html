@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Our Amazing Teachers - RKP School</title>
+  <style>
+    /* Global Styles */
+    body {
+      font-family: 'Poppins', sans-serif;
+      margin: 0;
+      padding: 0;
+      background: linear-gradient(135deg, #f5f8fc, #e8f0ff);
+      color: #333;
+    }
+
+    header {
+      background: linear-gradient(135deg, #1e3c72, #2a5298);
+      color: white;
+      text-align: center;
+      padding: 30px 20px;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    }
+
+    header img {
+      height: 70px;
+      vertical-align: middle;
+      margin-bottom: 10px;
+      cursor: pointer;
+      border-radius: 15px;
+      /* makes the logo rounded from sides */
+      border: 3px solid white;
+      /* optional: adds a neat border */
+    }
+
+    header h1 {
+      margin: 5px 0 0;
+      font-size: 2.5em;
+      font-weight: 700;
+    }
+
+    header p {
+      margin-top: 5px;
+      font-size: 1.1em;
+      opacity: 0.9;
+    }
+
+    /* Hero Section */
+    .hero {
+      position: relative;
+      width: 100%;
+      height: 280px;
+      background: url("school.jpg") center/cover no-repeat;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+    }
+
+    .hero::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, rgba(30, 60, 114, 0.7), rgba(42, 82, 152, 0.7));
+    }
+
+    .hero-text {
+      position: relative;
+      text-align: center;
+      z-index: 1;
+    }
+
+    .hero-text h2 {
+      font-size: 2.2em;
+      margin-bottom: 10px;
+    }
+
+    .hero-text p {
+      font-size: 1.1em;
+    }
+
+    /* Controls */
+    .controls {
+      max-width: 1200px;
+      margin: 25px auto;
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 15px;
+      padding: 0 20px;
+    }
+
+    .controls input,
+    .controls select {
+      padding: 12px 18px;
+      font-size: 15px;
+      border-radius: 10px;
+      border: 1px solid #ccc;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+      width: 220px;
+      transition: 0.3s;
+      background: #fff;
+    }
+
+    .controls input:focus,
+    .controls select:focus {
+      outline: none;
+      border-color: #2a5298;
+      box-shadow: 0 0 8px rgba(30, 60, 114, 0.3);
+    }
+
+    /* Staff Section */
+    .staff-section {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 30px;
+      padding: 50px 20px;
+      max-width: 1200px;
+      margin: auto;
+    }
+
+    /* Teacher Cards */
+    .teacher-card {
+      border-radius: 20px;
+      text-align: center;
+      padding: 25px;
+      cursor: pointer;
+      font-weight: 500;
+      min-height: 320px;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-start;
+      transition: transform 0.3s ease, box-shadow 0.3s ease, opacity 0.4s ease;
+      opacity: 0;
+      background: #fff;
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
+    }
+
+    .teacher-card.show {
+      opacity: 1;
+    }
+
+    .teacher-card:hover {
+      transform: translateY(-5px) scale(1.02);
+      box-shadow: 0 12px 28px rgba(0, 0, 0, 0.15);
+    }
+
+    .teacher-card img {
+      width: 120px;
+      height: 120px;
+      border-radius: 50%;
+      object-fit: cover;
+      margin: 0 auto 15px;
+      border: 4px solid #2a5298;
+    }
+
+    .teacher-card h3 {
+      margin: 8px 0 4px;
+      font-size: 1.2em;
+      color: #1e3c72;
+    }
+
+    .teacher-card p {
+      font-size: 14px;
+      margin: 4px 0;
+      color: #444;
+    }
+
+    .fun-teaser {
+      margin-top: auto;
+      font-size: 13px;
+      font-style: italic;
+      color: #2a5298;
+      background: rgba(42, 82, 152, 0.08);
+      border-radius: 12px;
+      padding: 8px;
+    }
+
+    /* Modal */
+    .modal {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.65);
+      justify-content: center;
+      align-items: center;
+      z-index: 1000;
+    }
+
+    .modal-content {
+      background: linear-gradient(135deg, #ffffff, #e3f2fd);
+      border-radius: 20px;
+      padding: 35px;
+      width: 90%;
+      max-width: 500px;
+      text-align: center;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.25);
+      animation: fadeIn 0.3s ease forwards;
+      position: relative;
+    }
+
+    .modal-content img {
+      width: 160px;
+      height: 160px;
+      border-radius: 50%;
+      object-fit: cover;
+      margin-bottom: 18px;
+      border: 4px solid #2a5298;
+    }
+
+    .modal-content h2 {
+      margin: 12px 0;
+      color: #1e3c72;
+      font-size: 1.6em;
+    }
+
+    .modal-content p {
+      font-size: 14px;
+      line-height: 1.5;
+      color: #333;
+      margin: 5px 0;
+    }
+
+    .close-btn {
+      position: absolute;
+      top: 12px;
+      right: 18px;
+      font-size: 28px;
+      cursor: pointer;
+      color: #555;
+      transition: 0.3s;
+    }
+
+    .close-btn:hover {
+      color: #000;
+    }
+
+    /* Footer */
+    footer {
+      text-align: center;
+      padding: 18px;
+      background: linear-gradient(135deg, #1e3c72, #2a5298);
+      color: white;
+      margin-top: 40px;
+      font-size: 14px;
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: scale(0.95);
+      }
+
+      to {
+        opacity: 1;
+        transform: scale(1);
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <header>
+    <a href="https://rkp.education/" target="_blank">
+      <img src="Rkp.jpg" alt="RKP School Logo">
+    </a>
+    <h1>Our Wonderful Teachers</h1>
+    <p>RKP School, (Madina) ✨</p>
+  </header>
+
+  <!-- Hero Banner -->
+  <div class="hero">
+    <div class="hero-text">
+      <h2>Welcome to Our School</h2>
+      <p>Where great teachers inspire young minds 🌟</p>
+    </div>
+  </div>
+
+  <!-- Controls -->
+  <div class="controls">
+    <input type="text" id="searchInput" placeholder="Search teacher by name...">
+    <select id="subjectFilter">
+      <option value="">All Subjects</option>
+    </select>
+    <select id="sortFilter">
+      <option value="">Sort By</option>
+      <option value="name">Name</option>
+      <option value="age">Age</option>
+    </select>
+  </div>
+
+  <!-- Teachers -->
+  <section class="staff-section" id="staffSection"></section>
+
+  <!-- Modal -->
+  <div id="teacherModal" class="modal">
+    <div class="modal-content" id="modalContent">
+      <span class="close-btn" onclick="closeModal()">&times;</span>
+      <img id="modalImg" src="" alt="Teacher">
+      <h2 id="modalName"></h2>
+      <p id="modalAge"></p>
+      <p id="modalSubject"></p>
+      <p id="modalFun"></p>
+      <p id="modalQuote" style="font-style:italic; color:#666;"></p>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer>
+    Made with ❤️ by <b>Mayank (11th Arts)</b>
+  </footer>
+
+  <script>
+    const defaultImg = "default.jpg";
+
+    const teachers = [
+      { id: "shail", name: "Mr. Shail", age: 38, img: "shail.jpg", subject: "Director", fun: "Guides the school with vision 🌟", quote: "Even Google asks him before making decisions 😄" },
+      { id: "geeta", name: "Mrs. Geeta Rathee", age: 35, img: "geeta.jpg", subject: "Principal", fun: "Runs the school with wisdom 😇", quote: "She’s so calm, even WiFi listens to her ✨" },
+      { id: "pawan", name: "Mr. Pawan", age: 32, img: "pawan.jpg", subject: "Maths", fun: "Makes numbers fun ✨🧮", quote: "He can multiply faster than the calculator 😅" },
+      { id: "shoitt", name: "Mr. Shoit", age: 29, img: "shoit.jpg", subject: "Maths", fun: "Solves equations faster than a calculator ➗", quote: "His favorite number is always infinity ♾️" },
+      { id: "benu", name: "Mrs. Benu", age: 33, img: "benu.jpg", subject: "Coordinator", fun: "Organizes chaos like a superhero 🦸‍♀", quote: "She could organize a cyclone into a timetable 📅" },
+      { id: "ishwar", name: "Mr. Ishwar", age: 31, img: "Ishwar.jpg", subject: "Political Science", fun: "Knows history & politics inside out 🏛", quote: "He debates so well, even the TV news calls him 📺" },
+      { id: "deepak", name: "Mr. Deepak Phawa", age: 28, img: "deepak.jpg", subject: "Maths", fun: "Turns tough sums into easy puzzles 🧩", quote: "He makes X and Y best friends forever 😄" },
+      { id: "gupta", name: "Mr. Gupta", age: 34, img: "gupta.jpg", subject: "English", fun: "Brings stories to life 📖✨", quote: "His vocabulary is bigger than the Oxford Dictionary 📚" },
+      { id: "manisha", name: "Mrs. Manisha", age: 27, img: "manisha.jpg", subject: "English", fun: "Makes grammar fun & memorable 😄", quote: "She makes tenses less tense 😅" },
+      { id: "kartik", name: "Mr. Kartik", age: 30, img: "Kartik.jpg", subject: "Chemistry", fun: "Known as Badmosh 😄😅", quote: "He mixes fun with chemistry better than any lab 🧪" },
+      { id: "vikram", name: "Mr. Vikram", age: 33, img: "vikram.jpg", subject: "Geography", fun: "Makes maps & places come alive 🌍", quote: "He could find Atlantis on Google Maps 📍" },
+      { id: "accountant", name: "Mr. Accountant", age: 36, img: "accountant.jpg", subject: "Accountant", fun: "Keeps every rupee balanced 💰📊", quote: "Even his calculator asks him for answers 💵" },
+      { id: "virender", name: "Mr. Virender", age: 29, img: "virender.jpg", subject: "Computer", fun: "Coding & tech wizard 💻⚡", quote: "Ctrl+C & Ctrl+V are his superpowers 🖱️" },
+      { id: "gori", name: "Mrs. Gori", age: 28, img: "gori mdm.jpg", subject: "Library", fun: "Books are her superpower 📚✨", quote: "She has read more books than Google has indexed 📖" }
+    ];
+
+    const staffSection = document.getElementById("staffSection");
+    const searchInput = document.getElementById("searchInput");
+    const subjectFilter = document.getElementById("subjectFilter");
+    const sortFilter = document.getElementById("sortFilter");
+
+    // Populate subject filter options
+    [...new Set(teachers.map(t => t.subject))].forEach(sub => {
+      const opt = document.createElement('option');
+      opt.value = sub;
+      opt.textContent = sub;
+      subjectFilter.appendChild(opt);
+    });
+
+    function renderTeachers() {
+      const searchText = searchInput.value.toLowerCase();
+      const filterSub = subjectFilter.value;
+      const sortBy = sortFilter.value;
+
+      let filtered = teachers.filter(t => t.name.toLowerCase().includes(searchText) && (filterSub === '' || t.subject === filterSub));
+
+      if (sortBy === 'name') filtered.sort((a, b) => a.name.localeCompare(b.name));
+      if (sortBy === 'age') filtered.sort((a, b) => a.age - b.age);
+
+      staffSection.innerHTML = "";
+
+      filtered.forEach(t => {
+        const card = document.createElement('div');
+        card.className = "teacher-card show";
+        card.innerHTML = `
+          <img src='${t.img}' onerror="this.src='${defaultImg}'">
+          <h3>${t.name}</h3>
+          <p>Age: ${t.age}</p>
+          <p>Subject: ${t.subject}</p>
+          <div class="fun-teaser">${t.fun}</div>`;
+        card.onclick = () => openModal(t);
+        staffSection.appendChild(card);
+      });
+    }
+
+    function openModal(t) {
+      document.getElementById('modalImg').src = t.img;
+      document.getElementById('modalImg').onerror = () => { document.getElementById('modalImg').src = defaultImg; };
+      document.getElementById('modalName').innerText = t.name;
+      document.getElementById('modalAge').innerText = 'Age: ' + t.age;
+      document.getElementById('modalSubject').innerText = 'Subject: ' + t.subject;
+      document.getElementById('modalFun').innerText = t.fun;
+      document.getElementById('modalQuote').innerText = t.quote;
+      document.getElementById('teacherModal').style.display = 'flex';
+    }
+
+    function closeModal() {
+      document.getElementById('teacherModal').style.display = 'none';
+    }
+
+    searchInput.addEventListener('input', renderTeachers);
+    subjectFilter.addEventListener('change', renderTeachers);
+    sortFilter.addEventListener('change', renderTeachers);
+
+    renderTeachers();
+  </script>
+ <center><H3> I only know some teacher so I added that teachers only...😅😉</H3></center>
+
+</body>
+
+</html>
